@@ -1,0 +1,101 @@
+{
+  "name": "@rogal/react-translate",
+  "version": "1.0.0-beta.1",
+  "description": "",
+  "main": "dist/index.js",
+  "module": "dist/index.es.js",
+  "files": [
+    "dist"
+  ],
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "start": "start-storybook -p 3001",
+    "build-storybook": "build-storybook -c .storybook -o .out-storybook",
+    "serve-storybook": "serve .out-storybook -p 5000",
+    "build": "rollup -c",
+    "watch": "rollup -cw",
+    "lint:js": "front-linter js  -- --presets=javascript,react --fix",
+    "lint:ts": "front-linter js  -- --presets=typescript,react --fix",
+    "lint:sass": "front-linter sass  --fix",
+    "lint": "npm run lint:js && npm run lint:ts && npm run lint:sass",
+    "test": "jest --coverage",
+    "report-coverage": "cat ./coverage/lcov.info | coveralls",
+    "test:watch": "jest --watch --coverage",
+    "publish:storybook": "gh-pages -d .out-storybook"
+  },
+  "keywords": [],
+  "author": "Gabriel García Seco",
+  "license": "MIT",
+  "peerDependencies": {
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0"
+  },
+  "dependencies": {
+    "@types/warning": "^3.0.0",
+    "mustache": "^3.2.0",
+    "react-html-parser": "^2.0.2",
+    "warning": "^4.0.3"
+  },
+  "devDependencies": {
+    "@rogal/front-linter": "2.5.1",
+    "@storybook/addon-actions": "5.2.8",
+    "@storybook/addon-docs": "5.2.8",
+    "@storybook/addon-knobs": "5.2.8",
+    "@storybook/addon-viewport": "5.2.8",
+    "@storybook/preset-scss": "^1.0.2",
+    "@storybook/preset-typescript": "^1.1.0",
+    "@storybook/react": "5.2.8",
+    "@testing-library/jest-dom": "^4.2.4",
+    "@testing-library/react": "^9.4.0",
+    "@types/jest": "^24.0.24",
+    "@types/mustache": "^0.8.32",
+    "@types/react-html-parser": "^2.0.1",
+    "autoprefixer": "^9.7.3",
+    "babel-loader": "^8.0.6",
+    "coveralls": "^3.0.9",
+    "framer-motion": "^1.7.0",
+    "gh-pages": "^2.1.1",
+    "husky": "^3.1.0",
+    "identity-obj-proxy": "^3.0.0",
+    "jest": "^24.9.0",
+    "lint-staged": "^9.5.0",
+    "node-sass": "^4.13.0",
+    "postcss": "^7.0.24",
+    "react": "^16.12.0",
+    "react-docgen-typescript-loader": "^3.6.0",
+    "react-dom": "^16.12.0",
+    "rollup": "^1.27.12",
+    "rollup-plugin-postcss": "^2.0.3",
+    "rollup-plugin-typescript2": "^0.25.3",
+    "sass-loader": "^8.0.0",
+    "serve": "^11.2.0",
+    "ts-jest": "^24.2.0",
+    "ts-loader": "^6.2.1",
+    "typescript": "3.7.3"
+  },
+  "eslintConfig": {
+    "extends": [
+      "./node_modules/@rogal/front-linter/typescript-react-eslint.js"
+    ]
+  },
+  "stylelint": {
+    "extends": [
+      "./node_modules/@rogal/front-linter/.stylelintrc.js"
+    ]
+  },
+  "lint-staged": {
+    "src/**/*.{js, jsx}": [
+      "npm run lint:js -- --fix --staged",
+      "git add"
+    ],
+    "src/**/*.{tsx, ts}": [
+      "npm run lint:ts -- --fix --staged",
+      "git add"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  }
+}

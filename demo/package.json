@@ -1,0 +1,17 @@
+{
+  "name": "demo",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev -p 4000",
+    "build": "next build",
+    "start": "next start"
+  },
+  "dependencies": {
+    "@rogal/react-translate": "1.0.0-beta.1",
+    "next": "9.1.6",
+    "react": "16.12.0",
+    "react-dom": "16.12.0"
+  },
+  "devDependencies": {}
+}

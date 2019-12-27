@@ -1,0 +1,6 @@
+{
+  "hello-world": "hola mundo", 
+  "hello-world-with-interpolations": "hola mundo mi nombre es {{value}}",
+  "hard-interpolation": "Esto es un fallback en caso de que <strong>el componente</strong> no se cargue bien",
+  "hard-interpolation-with-props": "Mi cuenta es <strong>{{count}}</strong>"
+}
