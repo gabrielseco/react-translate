@@ -1,4 +1,4 @@
-import ReactHtmlParser from 'react-html-parser';
+import parse from 'html-react-parser';
 
 interface TransProps {
   translation: string;
@@ -6,7 +6,7 @@ interface TransProps {
 }
 
 const Trans = ({ translation, children }: TransProps): any => {
-  return translation ? ReactHtmlParser(translation) : children;
+  return translation ? parse(translation) : children;
 };
 
 export default Trans;
