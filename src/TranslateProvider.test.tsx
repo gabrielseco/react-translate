@@ -1,7 +1,13 @@
 import React from 'react';
-import { render, fireEvent, getByRole } from '@testing-library/react';
+import { render, fireEvent } from '@testing-library/react';
 
-import { TranslateProvider, TranslateContext, useTranslate } from './index';
+import {
+  TranslateProvider,
+  TranslateContext,
+  useTranslate,
+  withTranslate,
+  tFunction
+} from './index';
 
 const commonEN = {
   'hello-world': 'hello world',
@@ -159,5 +165,31 @@ describe('useTranslate', () => {
 
       expect(p?.textContent).toBe(commonES['hello-world']);
     }
+  });
+});
+
+describe('withTranslate', () => {
+  const TranslationExample = ({ t }: { t: tFunction }) => {
+    return <p>{t('common:hello-world')}</p>;
+  };
+
+  const EnhancedTranslation = withTranslate('common')(TranslationExample);
+
+  let languageGetter: jest.SpyInstance;
+  beforeEach(() => {
+    languageGetter = jest.spyOn(window.navigator, 'language', 'get');
+  });
+
+  it('should return a literal correctly', () => {
+    languageGetter.mockReturnValue('en');
+    const { container } = render(
+      <Component>
+        <EnhancedTranslation />
+      </Component>
+    );
+
+    const p = container.querySelector('p');
+
+    expect(p?.textContent).toBe(commonEN['hello-world']);
   });
 });

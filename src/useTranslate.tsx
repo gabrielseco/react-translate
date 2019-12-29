@@ -3,6 +3,11 @@ import warning from 'warning';
 
 import { TranslateContext } from './TranslateContext';
 
+export type tFunction = (
+  key: string,
+  options?: { [key: string]: any }
+) => string;
+
 const isNil = (value: unknown) => {
   return value === null || value === undefined;
 };

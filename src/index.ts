@@ -4,12 +4,15 @@ import {
   TranslateContextInterface
 } from './TranslateContext';
 import TranslateProvider from './TranslateProvider';
-import useTranslate from './useTranslate';
+import useTranslate, { tFunction } from './useTranslate';
+import withTranslate from './withTranslate';
 
 export {
   Trans,
   TranslateContext,
   TranslateContextInterface,
   TranslateProvider,
-  useTranslate
+  useTranslate,
+  withTranslate,
+  tFunction
 };

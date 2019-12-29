@@ -4,7 +4,9 @@ import {
   TranslateProvider,
   TranslateContext,
   Trans,
-  useTranslate
+  useTranslate,
+  withTranslate,
+  tFunction
 } from './index';
 
 export default {
@@ -91,6 +93,12 @@ const dashboardES = {
   }
 };
 
+const Component = ({ t }: { t: tFunction }) => {
+  return <pre>{t('common:hello-world')}</pre>;
+};
+
+const EnhancedComponent = withTranslate('common')(Component);
+
 export const TranslateDemo = () => {
   const providerValue = {
     fallbackLng: 'en',
@@ -109,6 +117,7 @@ export const TranslateDemo = () => {
   return (
     <TranslateProvider value={providerValue}>
       <Children />
+      <EnhancedComponent />
     </TranslateProvider>
   );
 };
