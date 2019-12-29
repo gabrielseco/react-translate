@@ -15,7 +15,7 @@ export default {
 };
 
 const Children = () => {
-  const { t } = useTranslate('common', 'dashboard');
+  const { t } = useTranslate();
   const [count, setCount] = React.useState(0);
   const context = React.useContext(TranslateContext);
 
@@ -97,7 +97,7 @@ const Component = ({ t }: { t: tFunction }) => {
   return <pre>{t('common:hello-world')}</pre>;
 };
 
-const EnhancedComponent = withTranslate('common')(Component);
+const EnhancedComponent = withTranslate(Component);
 
 export const TranslateDemo = () => {
   const providerValue = {

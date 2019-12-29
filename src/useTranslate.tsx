@@ -8,7 +8,7 @@ export type tFunction = (
   options?: { [key: string]: any }
 ) => string;
 
-const isNil = (value: unknown) => {
+const isNil = (value: unknown): boolean => {
   return value === null || value === undefined;
 };
 
@@ -21,7 +21,7 @@ const replaceBrackets = (
   });
 };
 
-const useTranslate = (...args: string[]) => {
+const useTranslate = (): { t: tFunction } => {
   const context = React.useContext(TranslateContext);
 
   if (context === null) {

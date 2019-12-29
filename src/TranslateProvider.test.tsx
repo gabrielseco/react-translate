@@ -87,7 +87,7 @@ describe('useTranslate', () => {
     literal: string;
     options?: any;
   }) => {
-    const { t } = useTranslate('common', 'dashboard');
+    const { t } = useTranslate();
     return <p>{t(literal, options)}</p>;
   };
 
@@ -173,7 +173,7 @@ describe('withTranslate', () => {
     return <p>{t('common:hello-world')}</p>;
   };
 
-  const EnhancedTranslation = withTranslate('common')(TranslationExample);
+  const EnhancedTranslation = withTranslate(TranslationExample);
 
   let languageGetter: jest.SpyInstance;
   beforeEach(() => {
