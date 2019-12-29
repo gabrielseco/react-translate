@@ -20,7 +20,7 @@
     "lint": "npm run lint:js && npm run lint:ts && npm run lint:sass",
     "test": "jest --coverage",
     "report-coverage": "cat ./coverage/lcov.info | coveralls",
-    "test:watch": "jest --watch --coverage",
+    "test:watch": "jest --watchAll --coverage",
     "publish:storybook": "gh-pages -d .out-storybook"
   },
   "keywords": [],

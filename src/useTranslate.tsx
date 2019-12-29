@@ -32,7 +32,7 @@ const useTranslate = (...args: string[]) => {
 
   const t = (key: string, options?: { [key: string]: any }): string => {
     const [namespace, jsonKey] = key.split(':');
-    let translationValue: string = translations[lang][namespace][jsonKey];
+    let translationValue: string;
 
     if (jsonKey.indexOf('.') !== -1) {
       translationValue = jsonKey
