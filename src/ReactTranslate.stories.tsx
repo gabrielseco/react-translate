@@ -48,7 +48,7 @@ const Children = () => {
             count: count
           })}
         >
-          This is my count <strong>{count}</strong>
+          I have <strong>{count}</strong> pokemones
         </Trans>
       </pre>
       <button onClick={() => setCount(count => count + 1)}>
@@ -69,14 +69,19 @@ const commonEN = {
   'hello-world-with-interpolations': 'hello world my name is {{value}}',
   'hard-interpolation':
     'This is a fallback in case that <strong>the component</strong> does not load correctly',
-  'hard-interpolation-with-props': 'This is my count <strong>{{count}}</strong>'
+  'hard-interpolation-with-props':
+    'I have one <strong>{{count}}</strong> pokemon',
+  'hard-interpolation-with-props_plural':
+    'I have <strong>{{count}}</strong> pokemones'
 };
 const commonES = {
   'hello-world': 'hola mundo',
   'hello-world-with-interpolations': 'hola mundo mi nombre es {{value}}',
   'hard-interpolation':
     'Esto es un fallback en caso de que <strong>el componente</strong> no se cargue bien',
-  'hard-interpolation-with-props': 'Mi cuenta es <strong>{{count}}</strong>'
+  'hard-interpolation-with-props': 'Tengo <strong>{{count}}</strong> pokemon',
+  'hard-interpolation-with-props_plural':
+    'Tengo <strong>{{count}}</strong> pokemones'
 };
 const dashboardEN = {
   broncano: {

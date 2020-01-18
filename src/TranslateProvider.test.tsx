@@ -14,14 +14,21 @@ const commonEN = {
   'hello-world-with-interpolations': 'hello world my name is {{value}}',
   'hard-interpolation':
     'This is a fallback in case that <strong>the component</strong> does not load correctly',
-  'hard-interpolation-with-props': 'This is my count <strong>{{count}}</strong>'
+  'hard-interpolation-with-props':
+    'This is my count <strong>{{count}}</strong>',
+  'pokemon': 'I have <strong>{{count}}</strong> pokemon',
+  'pokemon_plural': 'I have <strong>{{count}}</strong> pokemones',
+  'plural-singular': 'Only this singular translation'
 };
 const commonES = {
   'hello-world': 'hola mundo',
   'hello-world-with-interpolations': 'hola mundo mi nombre es {{value}}',
   'hard-interpolation':
     'Esto es un fallback en caso de que <strong>el componente</strong> no se cargue bien',
-  'hard-interpolation-with-props': 'Mi cuenta es <strong>{{count}}</strong>'
+  'hard-interpolation-with-props': 'Mi cuenta es <strong>{{count}}</strong>',
+  'pokemon': 'Tengo <strong>{{count}}</strong> pokemon',
+  'pokemon_plural': 'Tengo <strong>{{count}}</strong> pokemones',
+  'plural-singular': 'Singular traducción'
 };
 const dashboardEN = {
   broncano: {
@@ -96,6 +103,15 @@ describe('useTranslate', () => {
     languageGetter = jest.spyOn(window.navigator, 'language', 'get');
   });
 
+  it("should return an empty string if we don't define a provider", () => {
+    const { container } = render(
+      <TranslationExample literal="common:hello-world"></TranslationExample>
+    );
+    const p = container.querySelector('p');
+
+    expect(p?.textContent).toBe('');
+  });
+
   it('should return the literal expected', () => {
     const { container } = render(
       <Component>
@@ -165,6 +181,34 @@ describe('useTranslate', () => {
 
       expect(p?.textContent).toBe(commonES['hello-world']);
     }
+  });
+
+  it('should return the plural translation if it finds one', () => {
+    const { container } = render(
+      <Component>
+        <TranslationExample
+          literal="common:pokemon"
+          options={{ count: 2 }}
+        ></TranslationExample>
+      </Component>
+    );
+    expect(container.querySelector('p')?.textContent).toBe(
+      'I have <strong>2</strong> pokemones'
+    );
+  });
+
+  it('should return the singular translation if it does not find the plural translation', () => {
+    const { container } = render(
+      <Component>
+        <TranslationExample
+          literal="common:plural-singular"
+          options={{ count: 2 }}
+        ></TranslationExample>
+      </Component>
+    );
+    expect(container.querySelector('p')?.textContent).toBe(
+      'Only this singular translation'
+    );
   });
 
   it("should return an empty string if you don't put a namespace to it", () => {
