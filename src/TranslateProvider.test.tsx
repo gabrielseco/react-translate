@@ -167,6 +167,30 @@ describe('useTranslate', () => {
     }
   });
 
+  it("should return an empty string if you don't put a namespace to it", () => {
+    process.env.NODE_ENV = 'production';
+    const { container } = render(
+      <Component>
+        <TranslationExample literal="hi"></TranslationExample>
+      </Component>
+    );
+    expect(container.querySelector('p')?.textContent).toBe('');
+
+    process.env.NODE_ENV = '';
+  });
+
+  it("should return an empty string if we don't find the translation in development", () => {
+    process.env.NODE_ENV = 'production';
+    const { container } = render(
+      <Component>
+        <TranslationExample literal="common:hi"></TranslationExample>
+      </Component>
+    );
+    expect(container.querySelector('p')?.textContent).toBe('');
+
+    process.env.NODE_ENV = '';
+  });
+
   it("should return an error if you don't put a namespace to it", () => {
     process.env.NODE_ENV = 'development';
     const fn = () =>
