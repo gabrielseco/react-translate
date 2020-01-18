@@ -22,7 +22,6 @@ const Children = () => {
         return (
           <>
             <pre>{lang}</pre>
-            <pre>{t('common:Hi')}</pre>
             <pre>{t('dashboard:broncano.say.hi')}</pre>
             <pre>{t('common:hello-world')}</pre>
             <pre>
