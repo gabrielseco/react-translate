@@ -166,6 +166,34 @@ describe('useTranslate', () => {
       expect(p?.textContent).toBe(commonES['hello-world']);
     }
   });
+
+  it("should return an error if you don't put a namespace to it", () => {
+    process.env.NODE_ENV = 'development';
+    const fn = () =>
+      render(
+        <Component>
+          <TranslationExample literal="hi"></TranslationExample>
+        </Component>
+      );
+    expect(() => fn()).toThrow('hi you passed should have a namespace');
+
+    process.env.NODE_ENV = 'production';
+  });
+
+  it("should return an error if we don't find the translation in development", () => {
+    process.env.NODE_ENV = 'development';
+    const fn = () =>
+      render(
+        <Component>
+          <TranslationExample literal="common:hi"></TranslationExample>
+        </Component>
+      );
+    expect(fn).toThrowError(
+      "The value you provided common:hi doesn't exists please check the common file so you make sure it exists"
+    );
+
+    process.env.NODE_ENV = 'production';
+  });
 });
 
 describe('withTranslate', () => {

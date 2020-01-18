@@ -13,7 +13,7 @@ import commonEN from './../locales/en/common.json';
 import dashboardEN from './../locales/en/dashboard.json';
 
 const Children = () => {
-  const { t } = useTranslate('common', 'dashboard');
+  const { t } = useTranslate();
   const [count, setCount] = React.useState(0);
 
   return (

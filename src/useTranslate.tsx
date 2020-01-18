@@ -1,6 +1,6 @@
 import React from 'react';
-import warning from 'warning';
 
+import { isDev } from './utils';
 import { TranslateContext } from './TranslateContext';
 
 export type tFunction = (
@@ -22,6 +22,7 @@ const replaceBrackets = (
 };
 
 const useTranslate = (): { t: tFunction } => {
+  const __DEV__ = isDev();
   const context = React.useContext(TranslateContext);
 
   if (context === null) {
@@ -36,10 +37,19 @@ const useTranslate = (): { t: tFunction } => {
   const { translations, lang } = context;
 
   const t = (key: string, options?: { [key: string]: any }): string => {
-    const [namespace, jsonKey] = key.split(':');
+    const namespaceSeparator = ':';
+    const searchSeparator = '.';
+    const hasNamespace = key.includes(namespaceSeparator);
+    if (!hasNamespace) {
+      if (__DEV__) {
+        throw new Error(`${key} you passed should have a namespace`);
+      }
+      return '';
+    }
+    const [namespace, jsonKey] = key.split(namespaceSeparator);
     let translationValue: string;
 
-    if (jsonKey.indexOf('.') !== -1) {
+    if (jsonKey.indexOf(searchSeparator) !== -1) {
       translationValue = jsonKey
         .split('.')
         .reduce((o, i) => o[i], translations[lang][namespace]);
@@ -47,10 +57,14 @@ const useTranslate = (): { t: tFunction } => {
       translationValue = translations[lang][namespace][jsonKey];
     }
 
-    warning(
-      translationValue !== undefined,
-      `The value you provided ${key} doesn't exists please check the ${namespace} file so you make sure it exists`
-    );
+    if (translationValue === undefined) {
+      if (__DEV__) {
+        throw new Error(
+          `The value you provided ${key} doesn't exists please check the ${namespace} file so you make sure it exists`
+        );
+      }
+      return '';
+    }
 
     const regex = new RegExp(/{{{?(#[a-z]+ )?[a-z]+.[a-z]*}?}}/);
 
