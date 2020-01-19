@@ -45,8 +45,15 @@ const dashboardES = {
   }
 };
 
-const Component = ({ children }: { children: any }) => {
+const Component = ({
+  children,
+  language
+}: {
+  children: any;
+  language?: string;
+}) => {
   const providerValue = {
+    language: language,
     fallbackLng: 'en',
     languages: ['en', 'es'],
     translations: {
@@ -66,13 +73,7 @@ const Component = ({ children }: { children: any }) => {
 };
 
 describe('TranslationProvider', () => {
-  let languageGetter: jest.SpyInstance;
-  beforeEach(() => {
-    languageGetter = jest.spyOn(window.navigator, 'language', 'get');
-  });
   it('should render with the context passed', () => {
-    languageGetter.mockReturnValue('en');
-
     const { container } = render(
       <Component>
         <TranslateContext.Consumer>
@@ -83,6 +84,19 @@ describe('TranslationProvider', () => {
       </Component>
     );
     expect(container.querySelector('pre')?.textContent).toBe('en');
+  });
+
+  it('should render with the language setted in the provider', () => {
+    const { container } = render(
+      <Component language="es">
+        <TranslateContext.Consumer>
+          {context => {
+            return <pre>{context && context.lang}</pre>;
+          }}
+        </TranslateContext.Consumer>
+      </Component>
+    );
+    expect(container.querySelector('pre')?.textContent).toBe('es');
   });
 });
 
@@ -98,11 +112,6 @@ describe('useTranslate', () => {
     return <p>{t(literal, options)}</p>;
   };
 
-  let languageGetter: jest.SpyInstance;
-  beforeEach(() => {
-    languageGetter = jest.spyOn(window.navigator, 'language', 'get');
-  });
-
   it("should return an empty string if we don't define a provider", () => {
     const { container } = render(
       <TranslationExample literal="common:hello-world"></TranslationExample>
@@ -114,7 +123,7 @@ describe('useTranslate', () => {
 
   it('should return the literal expected', () => {
     const { container } = render(
-      <Component>
+      <Component language="en">
         <TranslationExample literal="common:hello-world"></TranslationExample>
       </Component>
     );
@@ -126,7 +135,7 @@ describe('useTranslate', () => {
 
   it('should return the a literal with interpolations', () => {
     const { getByText } = render(
-      <Component>
+      <Component language="en">
         <TranslationExample
           literal="common:hello-world-with-interpolations"
           options={{ value: 'Gabriel' }}
@@ -138,10 +147,8 @@ describe('useTranslate', () => {
   });
 
   it('should return the a literal with dot notation', () => {
-    languageGetter.mockReturnValue('en');
-
     const { container } = render(
-      <Component>
+      <Component language="en">
         <TranslationExample literal="dashboard:broncano.say.hi"></TranslationExample>
       </Component>
     );
@@ -153,7 +160,7 @@ describe('useTranslate', () => {
 
   it('should return the literal in english and after in spanish', () => {
     const { container } = render(
-      <Component>
+      <Component language="en">
         <TranslationExample
           literal="common:hello-world"
           options={{ value: 'Gabriel' }}
@@ -185,7 +192,7 @@ describe('useTranslate', () => {
 
   it('should return the plural translation if it finds one', () => {
     const { container } = render(
-      <Component>
+      <Component language="en">
         <TranslationExample
           literal="common:pokemon"
           options={{ count: 2 }}
@@ -199,7 +206,7 @@ describe('useTranslate', () => {
 
   it('should return the singular translation if it does not find the plural translation', () => {
     const { container } = render(
-      <Component>
+      <Component language="en">
         <TranslationExample
           literal="common:plural-singular"
           options={{ count: 2 }}
@@ -214,7 +221,7 @@ describe('useTranslate', () => {
   it("should return an empty string if you don't put a namespace to it", () => {
     process.env.NODE_ENV = 'production';
     const { container } = render(
-      <Component>
+      <Component language="en">
         <TranslationExample literal="hi"></TranslationExample>
       </Component>
     );
@@ -226,7 +233,7 @@ describe('useTranslate', () => {
   it("should return an empty string if we don't find the translation in development", () => {
     process.env.NODE_ENV = 'production';
     const { container } = render(
-      <Component>
+      <Component language="en">
         <TranslationExample literal="common:hi"></TranslationExample>
       </Component>
     );
@@ -239,7 +246,7 @@ describe('useTranslate', () => {
     process.env.NODE_ENV = 'development';
     const fn = () =>
       render(
-        <Component>
+        <Component language="en">
           <TranslationExample literal="hi"></TranslationExample>
         </Component>
       );
@@ -252,7 +259,7 @@ describe('useTranslate', () => {
     process.env.NODE_ENV = 'development';
     const fn = () =>
       render(
-        <Component>
+        <Component language="en">
           <TranslationExample literal="common:hi"></TranslationExample>
         </Component>
       );
@@ -271,15 +278,9 @@ describe('withTranslate', () => {
 
   const EnhancedTranslation = withTranslate(TranslationExample);
 
-  let languageGetter: jest.SpyInstance;
-  beforeEach(() => {
-    languageGetter = jest.spyOn(window.navigator, 'language', 'get');
-  });
-
   it('should return a literal correctly', () => {
-    languageGetter.mockReturnValue('en');
     const { container } = render(
-      <Component>
+      <Component language="en">
         <EnhancedTranslation />
       </Component>
     );

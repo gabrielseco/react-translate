@@ -106,6 +106,7 @@ const EnhancedComponent = withTranslate(Component);
 
 export const TranslateDemo = () => {
   const providerValue = {
+    language: 'es',
     fallbackLng: 'en',
     languages: ['en', 'es'],
     translations: {

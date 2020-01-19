@@ -7,6 +7,7 @@ interface TranslateProviderProps {
     fallbackLng: string;
     languages: string[];
     translations: Record<string, any>;
+    language?: string;
   };
   children: React.ReactNode;
 }
@@ -15,7 +16,7 @@ const TranslateProvider = ({
   value,
   children
 }: TranslateProviderProps): JSX.Element => {
-  const lang = value.fallbackLng;
+  const lang = value.language || value.fallbackLng;
   const [context, setContext] = React.useState({
     lang,
     languages: value.languages,
@@ -28,13 +29,6 @@ const TranslateProvider = ({
       lang: language
     }));
   };
-
-  React.useEffect(() => {
-    setContext(contextState => ({
-      ...contextState,
-      lang: navigator.language
-    }));
-  }, []);
 
   const contextValue = {
     ...context,
