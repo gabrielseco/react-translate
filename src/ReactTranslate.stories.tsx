@@ -23,7 +23,7 @@ const Children = () => {
     return null;
   }
 
-  const { lang, switchLanguage } = context;
+  const { lang } = context;
 
   return (
     <>
@@ -54,48 +54,8 @@ const Children = () => {
       <button onClick={() => setCount(count => count + 1)}>
         increment count
       </button>
-      <button onClick={() => switchLanguage('es')}>
-        cambiar lenguage a es
-      </button>
-      <button onClick={() => switchLanguage('en')}>
-        cambiar lenguage a en
-      </button>
     </>
   );
-};
-
-const commonEN = {
-  'hello-world': 'hello world',
-  'hello-world-with-interpolations': 'hello world my name is {{value}}',
-  'hard-interpolation':
-    'This is a fallback in case that <strong>the component</strong> does not load correctly',
-  'hard-interpolation-with-props':
-    'I have one <strong>{{count}}</strong> pokemon',
-  'hard-interpolation-with-props_plural':
-    'I have <strong>{{count}}</strong> pokemones'
-};
-const commonES = {
-  'hello-world': 'hola mundo',
-  'hello-world-with-interpolations': 'hola mundo mi nombre es {{value}}',
-  'hard-interpolation':
-    'Esto es un fallback en caso de que <strong>el componente</strong> no se cargue bien',
-  'hard-interpolation-with-props': 'Tengo <strong>{{count}}</strong> pokemon',
-  'hard-interpolation-with-props_plural':
-    'Tengo <strong>{{count}}</strong> pokemones'
-};
-const dashboardEN = {
-  broncano: {
-    say: {
-      hi: 'Oh Mum'
-    }
-  }
-};
-const dashboardES = {
-  broncano: {
-    say: {
-      hi: 'Oh Mama'
-    }
-  }
 };
 
 const Component = ({ t }: { t: tFunction }) => {
@@ -105,25 +65,10 @@ const Component = ({ t }: { t: tFunction }) => {
 const EnhancedComponent = withTranslate(Component);
 
 export const TranslateDemo = () => {
-  const providerValue = {
-    language: 'es',
-    fallbackLng: 'en',
-    languages: ['en', 'es'],
-    translations: {
-      en: {
-        common: commonEN,
-        dashboard: dashboardEN
-      },
-      es: {
-        common: commonES,
-        dashboard: dashboardES
-      }
-    }
-  };
   return (
-    <TranslateProvider value={providerValue}>
+    <>
       <Children />
       <EnhancedComponent />
-    </TranslateProvider>
+    </>
   );
 };
