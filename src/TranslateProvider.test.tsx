@@ -128,7 +128,8 @@ describe('TranslationProvider', () => {
     };
     const Child = () => {
       const context = React.useContext(TranslateContext);
-      return <p>{context?.lang}</p>;
+      if (!context) return null;
+      return <p>{context.lang}</p>;
     };
 
     const { container, getByRole } = render(
