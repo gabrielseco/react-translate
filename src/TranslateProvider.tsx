@@ -16,22 +16,22 @@ const TranslateProvider = ({
   value,
   children
 }: TranslateProviderProps): JSX.Element => {
-  const lang = value.language || value.fallbackLng;
-  const [context, setContext] = React.useState({
-    lang,
-    languages: value.languages,
-    translations: value.translations
-  });
+  const [lang, setLang] = React.useState(value.language || value.fallbackLng);
+
+  React.useEffect(() => {
+    if (value.language) {
+      setLang(value.language);
+    }
+  }, [value.language]);
 
   const switchLanguage = (language: string): void => {
-    setContext(contextState => ({
-      ...contextState,
-      lang: language
-    }));
+    setLang(language);
   };
 
   const contextValue = {
-    ...context,
+    lang,
+    languages: value.languages,
+    translations: value.translations,
     switchLanguage
   };
 
