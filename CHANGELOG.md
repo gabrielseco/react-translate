@@ -12,6 +12,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixed
 ### Removed
 ### BREAKING CHANGES
+
+## [1.0.0-beta.12] - 2020-01-25
+
+### Added
+  - Update language when we change the value of the provider
  
 ## [1.0.0-beta.11] - 2020-01-19
 

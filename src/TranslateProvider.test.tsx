@@ -98,6 +98,51 @@ describe('TranslationProvider', () => {
     );
     expect(container.querySelector('pre')?.textContent).toBe('es');
   });
+
+  it('should update the language prop if we pass a different language to the provider', () => {
+    const ProviderUpdate = ({ children }: { children: any }) => {
+      const [language, setLanguage] = React.useState('en');
+      const providerValue = {
+        language: language,
+        fallbackLng: 'en',
+        languages: ['en', 'es'],
+        translations: {
+          en: {
+            common: commonEN,
+            dashboard: dashboardEN
+          },
+          es: {
+            common: commonES,
+            dashboard: dashboardES
+          }
+        }
+      };
+      return (
+        <>
+          <TranslateProvider value={providerValue}>
+            {children}
+          </TranslateProvider>
+          <button onClick={() => setLanguage('es')}></button>
+        </>
+      );
+    };
+    const Child = () => {
+      const context = React.useContext(TranslateContext);
+      return <p>{context?.lang}</p>;
+    };
+
+    const { container, getByRole } = render(
+      <ProviderUpdate>
+        <Child></Child>
+      </ProviderUpdate>
+    );
+
+    expect(container.querySelector('p')?.textContent).toBe('en');
+    const button = getByRole('button');
+
+    fireEvent.click(button);
+    expect(container.querySelector('p')?.textContent).toBe('es');
+  });
 });
 
 describe('useTranslate', () => {
