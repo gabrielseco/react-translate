@@ -15,6 +15,7 @@
   },
 
   "exclude": [
+    "rollup.config.ts",
     "config/**/*.ts",
     "config/**/*.ts",
     "demo/**/*.ts",
