@@ -83,7 +83,7 @@ describe('TranslationProvider', () => {
         </TranslateContext.Consumer>
       </Component>
     );
-    expect(container.querySelector('pre')?.textContent).toBe('en');
+    expect(container.querySelector('pre')).toHaveTextContent('en');
   });
 
   it('should render with the language setted in the provider', () => {
@@ -96,7 +96,7 @@ describe('TranslationProvider', () => {
         </TranslateContext.Consumer>
       </Component>
     );
-    expect(container.querySelector('pre')?.textContent).toBe('es');
+    expect(container.querySelector('pre')).toHaveTextContent('es');
   });
 
   it('should update the language prop if we pass a different language to the provider', () => {
@@ -138,11 +138,11 @@ describe('TranslationProvider', () => {
       </ProviderUpdate>
     );
 
-    expect(container.querySelector('p')?.textContent).toBe('en');
+    expect(container.querySelector('p')).toHaveTextContent('en');
     const button = getByRole('button');
 
     fireEvent.click(button);
-    expect(container.querySelector('p')?.textContent).toBe('es');
+    expect(container.querySelector('p')).toHaveTextContent('es');
   });
 });
 
@@ -164,7 +164,7 @@ describe('useTranslate', () => {
     );
     const p = container.querySelector('p');
 
-    expect(p?.textContent).toBe('');
+    expect(p).toHaveTextContent('');
   });
 
   it('should return the literal expected', () => {
@@ -176,7 +176,7 @@ describe('useTranslate', () => {
 
     const p = container.querySelector('p');
 
-    expect(p?.textContent).toBe(commonEN['hello-world']);
+    expect(p).toHaveTextContent(commonEN['hello-world']);
   });
 
   it('should return the a literal with interpolations', () => {
@@ -199,13 +199,13 @@ describe('useTranslate', () => {
       </Component>
     );
 
-    expect(container.querySelector('p')?.textContent).toBe(
+    expect(container.querySelector('p')).toHaveTextContent(
       dashboardEN.broncano.say.hi
     );
   });
 
   it('should return the literal in english and after in spanish', () => {
-    const { container } = render(
+    const { container, getByRole } = render(
       <Component language="en">
         <TranslationExample
           literal="common:hello-world"
@@ -224,16 +224,13 @@ describe('useTranslate', () => {
     );
 
     const p = container.querySelector('p');
-    const button = container.querySelector('button');
+    const button = getByRole('button');
 
-    expect(p?.textContent).toBe(commonEN['hello-world']);
+    expect(p).toHaveTextContent(commonEN['hello-world']);
 
-    if (button) {
-      //TODO: THIS IS BAD
-      fireEvent.click(button);
+    fireEvent.click(button);
 
-      expect(p?.textContent).toBe(commonES['hello-world']);
-    }
+    expect(p).toHaveTextContent(commonES['hello-world']);
   });
 
   it('should return the plural translation if it finds one', () => {
@@ -245,7 +242,7 @@ describe('useTranslate', () => {
         ></TranslationExample>
       </Component>
     );
-    expect(container.querySelector('p')?.textContent).toBe(
+    expect(container.querySelector('p')).toHaveTextContent(
       'I have <strong>2</strong> pokemones'
     );
   });
@@ -259,7 +256,7 @@ describe('useTranslate', () => {
         ></TranslationExample>
       </Component>
     );
-    expect(container.querySelector('p')?.textContent).toBe(
+    expect(container.querySelector('p')).toHaveTextContent(
       'Only this singular translation'
     );
   });
@@ -271,7 +268,7 @@ describe('useTranslate', () => {
         <TranslationExample literal="hi"></TranslationExample>
       </Component>
     );
-    expect(container.querySelector('p')?.textContent).toBe('');
+    expect(container.querySelector('p')).toHaveTextContent('');
 
     process.env.NODE_ENV = '';
   });
@@ -283,7 +280,7 @@ describe('useTranslate', () => {
         <TranslationExample literal="common:hi"></TranslationExample>
       </Component>
     );
-    expect(container.querySelector('p')?.textContent).toBe('');
+    expect(container.querySelector('p')).toHaveTextContent('');
 
     process.env.NODE_ENV = '';
   });
@@ -333,6 +330,6 @@ describe('withTranslate', () => {
 
     const p = container.querySelector('p');
 
-    expect(p?.textContent).toBe(commonEN['hello-world']);
+    expect(p).toHaveTextContent(commonEN['hello-world']);
   });
 });
