@@ -233,7 +233,7 @@ describe('useTranslate', () => {
     expect(p).toHaveTextContent(commonES['hello-world']);
   });
 
-  it('should return value', () => {
+  it('should return the translate value without interpolations', () => {
     const { container } = render(
       <Component language="en">
         <TranslationExample literal="common:hello-world-with-interpolations"></TranslationExample>
