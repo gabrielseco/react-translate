@@ -1,14 +1,10 @@
 import React from 'react';
 
 import { TranslateContext } from './TranslateContext';
+import { Configuration } from './interfaces';
 
 interface TranslateProviderProps {
-  value: {
-    fallbackLng: string;
-    languages: string[];
-    translations: Record<string, any>;
-    language?: string;
-  };
+  value: Configuration;
   children: React.ReactNode;
 }
 

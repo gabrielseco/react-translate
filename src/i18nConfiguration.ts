@@ -1,14 +1,16 @@
 import { translate, getTraslationConstants } from './utils';
-import { Options, tFunction } from './interfaces';
+import { Options, tFunction, Configuration } from './interfaces';
 
-const i18nConfiguration = (config): { t: tFunction } => {
+const i18nConfiguration = (config: Configuration): { t: tFunction } => {
   const {
     isDev,
     searchSeparator,
     namespaceSeparator,
     pluralsSuffix
   } = getTraslationConstants();
-  const { translations, lang } = config;
+  const { translations, language, fallbackLng } = config;
+  const lang = language || fallbackLng;
+
   return {
     t: (key: string, options?: Options): string => {
       return translate({
