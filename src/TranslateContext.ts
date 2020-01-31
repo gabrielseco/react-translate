@@ -1,8 +1,10 @@
 import React from 'react';
 
+import { Translations } from './interfaces';
+
 export interface TranslateContextInterface {
   lang: string;
-  translations: Record<string, any>;
+  translations: Translations;
   switchLanguage: (language: string) => void;
 }
 

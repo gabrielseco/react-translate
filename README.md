@@ -49,6 +49,33 @@ const App = () => {
 
 ```
 
+### How to instance a i18nConfiguration so you can use it outside of react
+
+You only need to import the i18nConfiguration and passed the next config
+
+```js
+import {i18nConfiguration} from '@rogal/react-translate';
+import commonES from 'locales/es/common';
+import commonEN from 'locales/en/common';
+
+const i18next = i18nConfiguration({
+  languages: ['es', 'en'],
+    translations: {
+      es: {
+        common: commonES
+      },
+      en: {
+        common: commonEN
+      }
+    },
+    fallbackLng: 'en',
+    language: 'en'
+});
+
+const translation = i18next.t('helloWorld');
+
+```
+
 
 ### More examples
 
