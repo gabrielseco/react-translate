@@ -1,3 +1,4 @@
+import i18nConfiguration from './i18nConfiguration';
 import Trans from './Trans';
 import {
   TranslateContext,
@@ -9,6 +10,7 @@ import withTranslate from './withTranslate';
 import { tFunction } from './interfaces';
 
 export {
+  i18nConfiguration,
   Trans,
   TranslateContext,
   TranslateContextInterface,
