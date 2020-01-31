@@ -13,6 +13,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Removed
 ### BREAKING CHANGES
 
+## [1.0.0-beta.13] - 2020-01-31
+### Added
+  - Posibility of using the t function outside of react components, now you can use it instancing a configuration and you can use it outside of React lifecycle
+
 ## [1.0.0-beta.12] - 2020-01-25
 
 ### Added
