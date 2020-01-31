@@ -2,10 +2,6 @@ import { Options, Translations } from './interfaces';
 
 export const isDev = (): boolean => process.env.NODE_ENV === 'development';
 
-const isNil = (value: unknown): boolean => {
-  return value === null || value === undefined;
-};
-
 const hasPlurals = (options: Options): boolean => {
   const arrValueOptions = Object.keys(options)
     .map(key => {
@@ -50,7 +46,7 @@ const replaceBrackets = (
   options?: Options
 ): string => {
   return translationValue.replace(/{{(.+?)}}/g, (_, g1) => {
-    return options && !isNil(options) ? options[g1] : g1;
+    return options ? options[g1] : g1;
   });
 };
 

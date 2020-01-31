@@ -233,6 +233,18 @@ describe('useTranslate', () => {
     expect(p).toHaveTextContent(commonES['hello-world']);
   });
 
+  it('should return value', () => {
+    const { container } = render(
+      <Component language="en">
+        <TranslationExample literal="common:hello-world-with-interpolations"></TranslationExample>
+      </Component>
+    );
+
+    const p = container.querySelector('p');
+
+    expect(p?.textContent).toBe('hello world my name is value');
+  });
+
   it('should return the plural translation if it finds one', () => {
     const { container } = render(
       <Component language="en">
