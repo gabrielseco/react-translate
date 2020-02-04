@@ -2,7 +2,7 @@ import { Options, Translations } from './interfaces';
 
 export const isDev = (): boolean => process.env.NODE_ENV === 'development';
 
-export const hasPlurals = (options: Options): boolean => {
+const hasPlurals = (options: Options): boolean => {
   const arrValueOptions = Object.keys(options)
     .map(key => {
       return {
