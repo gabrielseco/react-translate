@@ -245,6 +245,20 @@ describe('useTranslate', () => {
     expect(p?.textContent).toBe('hello world my name is value');
   });
 
+  it('should return the plural translation with zero quantity', () => {
+    const { container } = render(
+      <Component language="en">
+        <TranslationExample
+          literal="common:pokemon"
+          options={{ count: 0 }}
+        ></TranslationExample>
+      </Component>
+    );
+    expect(container.querySelector('p')).toHaveTextContent(
+      'I have <strong>0</strong> pokemones'
+    );
+  });
+
   it('should return the plural translation if it finds one', () => {
     const { container } = render(
       <Component language="en">

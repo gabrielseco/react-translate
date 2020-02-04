@@ -2,7 +2,7 @@ import { Options, Translations } from './interfaces';
 
 export const isDev = (): boolean => process.env.NODE_ENV === 'development';
 
-const hasPlurals = (options: Options): boolean => {
+export const hasPlurals = (options: Options): boolean => {
   const arrValueOptions = Object.keys(options)
     .map(key => {
       return {
@@ -10,7 +10,9 @@ const hasPlurals = (options: Options): boolean => {
         value: options[key]
       };
     })
-    .filter(value => value.type === 'number' && value.value > 1);
+    .filter(
+      value => value.type === 'number' && (value.value > 1 || value.value === 0)
+    );
 
   return arrValueOptions.length > 0;
 };

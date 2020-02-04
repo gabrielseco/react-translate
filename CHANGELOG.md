@@ -13,6 +13,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Removed
 ### BREAKING CHANGES
 
+## [1.0.0-beta.14] - 2020-02-04
+### Added
+  - Trans component accepts an array with translation so you can join phrases
+
+### Fixed
+  - Fix case when zero items and we should translate as plural
+
 ## [1.0.0-beta.13] - 2020-01-31
 ### Added
   - Posibility of using the t function outside of react components, now you can use it instancing a configuration and you can use it outside of React lifecycle

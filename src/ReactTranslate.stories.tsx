@@ -51,6 +51,20 @@ const Children = () => {
           I have <strong>{count}</strong> pokemones
         </Trans>
       </pre>
+      <pre>
+        <Trans
+          translation={[
+            t('common:coupons', {
+              coupons: 0
+            }),
+            t('common:uses', {
+              uses: 0
+            })
+          ]}
+        >
+          I have <strong>1</strong> coupons and 1 uses
+        </Trans>
+      </pre>
       <button onClick={() => setCount(count => count + 1)}>
         increment count
       </button>
@@ -72,7 +86,11 @@ const commonEN = {
   'hard-interpolation-with-props':
     'I have one <strong>{{count}}</strong> pokemon',
   'hard-interpolation-with-props_plural':
-    'I have <strong>{{count}}</strong> pokemones'
+    'I have <strong>{{count}}</strong> pokemones',
+  'coupons': 'I have {{coupons}} coupon',
+  'coupons_plural': 'I have {{coupons}} coupons',
+  'uses': 'and {{uses}} use',
+  'uses_plural': 'and {{uses}} uses'
 };
 const commonES = {
   'hello-world': 'hola mundo',
@@ -81,7 +99,11 @@ const commonES = {
     'Esto es un fallback en caso de que <strong>el componente</strong> no se cargue bien',
   'hard-interpolation-with-props': 'Tengo <strong>{{count}}</strong> pokemon',
   'hard-interpolation-with-props_plural':
-    'Tengo <strong>{{count}}</strong> pokemones'
+    'Tengo <strong>{{count}}</strong> pokemones',
+  'coupons': 'Tengo un {{coupons}} cupón',
+  'coupons_plural': 'Yo tengo {{coupons}} cupones',
+  'uses': 'y {{uses}} uso',
+  'uses_plural': 'and {{uses}} usos'
 };
 const dashboardEN = {
   broncano: {
