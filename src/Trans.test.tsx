@@ -39,4 +39,13 @@ describe('Trans component', () => {
     expect(queryByText(/hola nico/)).toBeNull();
     expect(container.querySelector('strong')).not.toBeNull();
   });
+
+  it('should render translation prop as an array', () => {
+    const t = (str: string) => str;
+
+    const { queryByText } = render(
+      <Trans translation={[t('hola'), t('nico')]}>hola nico</Trans>
+    );
+    expect(queryByText(/hola nico/)).not.toBeNull();
+  });
 });

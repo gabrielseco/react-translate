@@ -10,7 +10,9 @@ const hasPlurals = (options: Options): boolean => {
         value: options[key]
       };
     })
-    .filter(value => value.type === 'number' && value.value > 1);
+    .filter(
+      value => value.type === 'number' && (value.value > 1 || value.value === 0)
+    );
 
   return arrValueOptions.length > 0;
 };
