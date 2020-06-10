@@ -13,6 +13,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Removed
 ### BREAKING CHANGES
 
+## [1.0.0-beta.15] - 2020-06-10
+### BREAKING CHANGES
+### Changed
+  - instead of getting value as prop of the provider pass i18n prop and change Configuration interface to I18nConfiguration
+
 ## [1.0.0-beta.14] - 2020-02-04
 ### Added
   - Trans component accepts an array with translation so you can join phrases

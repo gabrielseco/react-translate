@@ -1,7 +1,7 @@
 import { translate, getTraslationConstants } from './utils';
-import { Options, tFunction, Configuration } from './interfaces';
+import { Options, tFunction, I18nConfiguration } from './interfaces';
 
-const i18nConfiguration = (config: Configuration): { t: tFunction } => {
+const i18nConfiguration = (config: I18nConfiguration): { t: tFunction } => {
   const {
     isDev,
     searchSeparator,
