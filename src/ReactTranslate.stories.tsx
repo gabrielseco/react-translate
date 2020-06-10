@@ -143,7 +143,7 @@ export const TranslateDemo = () => {
     }
   };
   return (
-    <TranslateProvider value={providerValue}>
+    <TranslateProvider i18n={providerValue}>
       <Children />
       <EnhancedComponent />
     </TranslateProvider>

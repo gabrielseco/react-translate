@@ -67,9 +67,7 @@ const Component = ({
       }
     }
   };
-  return (
-    <TranslateProvider value={providerValue}>{children}</TranslateProvider>
-  );
+  return <TranslateProvider i18n={providerValue}>{children}</TranslateProvider>;
 };
 
 describe('TranslationProvider', () => {
@@ -119,9 +117,7 @@ describe('TranslationProvider', () => {
       };
       return (
         <>
-          <TranslateProvider value={providerValue}>
-            {children}
-          </TranslateProvider>
+          <TranslateProvider i18n={providerValue}>{children}</TranslateProvider>
           <button onClick={() => setLanguage('es')}></button>
         </>
       );
