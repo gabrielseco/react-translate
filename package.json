@@ -12,7 +12,7 @@
     "start": "start-storybook -p 3001",
     "build-storybook": "build-storybook -c .storybook -o .out-storybook",
     "serve-storybook": "serve .out-storybook -p 5000",
-    "build": "rollup -c rollup.config.ts",
+    "build": "rm -rf dist && rollup -c rollup.config.ts",
     "watch": "rollup -c rollup.config.ts -w",
     "lint:js": "front-linter js  -- --presets=javascript,react --fix",
     "lint:ts": "front-linter js  -- --presets=typescript,react --fix",

@@ -62,7 +62,7 @@ const Children = () => {
 };
 
 const Home = (): JSX.Element => {
-  const providerValue = {
+  const i18n = {
     fallbackLng: 'en',
     languages: ['en', 'es'],
     translations: {
@@ -82,7 +82,7 @@ const Home = (): JSX.Element => {
         <title>Home</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <TranslateProvider value={providerValue}>
+      <TranslateProvider i18n={i18n}>
         <Children />
       </TranslateProvider>
     </div>
