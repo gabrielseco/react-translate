@@ -9,7 +9,10 @@ const commonEN = {
     'This is my count <strong>{{count}}</strong>',
   'pokemon': 'I have <strong>{{count}}</strong> pokemon',
   'pokemon_plural': 'I have <strong>{{count}}</strong> pokemones',
-  'plural-singular': 'Only this singular translation'
+  'plural-singular': 'Only this singular translation',
+  'validations': {
+    translation: 'hey'
+  }
 };
 const commonES = {
   'hello-world': 'hola mundo',
@@ -19,7 +22,21 @@ const commonES = {
   'hard-interpolation-with-props': 'Mi cuenta es <strong>{{count}}</strong>',
   'pokemon': 'Tengo <strong>{{count}}</strong> pokemon',
   'pokemon_plural': 'Tengo <strong>{{count}}</strong> pokemones',
-  'plural-singular': 'Singular traducción'
+  'plural-singular': 'Singular traducción',
+  'validations': {
+    translation: 'hey'
+  }
+};
+
+const authEN = {
+  validations: {
+    translation: 'hey'
+  }
+};
+const authES = {
+  validations: {
+    translation: 'hey'
+  }
 };
 
 describe('i18nConfiguration', () => {
@@ -27,9 +44,11 @@ describe('i18nConfiguration', () => {
     languages: ['es', 'en'],
     translations: {
       es: {
+        auth: authES,
         common: commonES
       },
       en: {
+        auth: authEN,
         common: commonEN
       }
     },
@@ -52,5 +71,11 @@ describe('i18nConfiguration', () => {
     });
 
     expect(i18n.t('common:hello-world')).toBe(commonES['hello-world']);
+  });
+
+  it('should translate a deep literal in json file', () => {
+    expect(i18next.t('auth:validations.translation')).toBe(
+      authEN.validations.translation
+    );
   });
 });

@@ -70,6 +70,17 @@ const Component = ({
   return <TranslateProvider i18n={providerValue}>{children}</TranslateProvider>;
 };
 
+const TranslationExample = ({
+  literal,
+  options
+}: {
+  literal: string;
+  options?: any;
+}) => {
+  const { t } = useTranslate();
+  return <p>{t(literal, options)}</p>;
+};
+
 describe('TranslationProvider', () => {
   it('should render with the context passed', () => {
     const { container } = render(
@@ -143,26 +154,6 @@ describe('TranslationProvider', () => {
 });
 
 describe('useTranslate', () => {
-  const TranslationExample = ({
-    literal,
-    options
-  }: {
-    literal: string;
-    options?: any;
-  }) => {
-    const { t } = useTranslate();
-    return <p>{t(literal, options)}</p>;
-  };
-
-  it("should return an empty string if we don't define a provider", () => {
-    const { container } = render(
-      <TranslationExample literal="common:hello-world"></TranslationExample>
-    );
-    const p = container.querySelector('p');
-
-    expect(p).toHaveTextContent('');
-  });
-
   it('should return the literal expected', () => {
     const { container } = render(
       <Component language="en">
@@ -282,57 +273,79 @@ describe('useTranslate', () => {
       'Only this singular translation'
     );
   });
+  describe('errors', () => {
+    beforeEach(() => {
+      //eslint-disable-next-line
+      jest.spyOn(console, 'error').mockImplementation(() => {});
+    });
 
-  it("should return an empty string if you don't put a namespace to it", () => {
-    process.env.NODE_ENV = 'production';
-    const { container } = render(
-      <Component language="en">
-        <TranslationExample literal="hi"></TranslationExample>
-      </Component>
-    );
-    expect(container.querySelector('p')).toHaveTextContent('');
+    afterEach(() => {
+      (console.error as any).mockClear();
+    });
 
-    process.env.NODE_ENV = '';
-  });
+    it("should return an empty string if we don't define a provider", () => {
+      const { container } = render(
+        <TranslationExample literal="common:hello-world"></TranslationExample>
+      );
+      const p = container.querySelector('p');
 
-  it("should return an empty string if we don't find the translation in development", () => {
-    process.env.NODE_ENV = 'production';
-    const { container } = render(
-      <Component language="en">
-        <TranslationExample literal="common:hi"></TranslationExample>
-      </Component>
-    );
-    expect(container.querySelector('p')).toHaveTextContent('');
+      expect(p).toHaveTextContent('');
+      expect(console.error).toHaveBeenCalled();
+      expect(console.error).toHaveBeenCalledTimes(1);
+    });
 
-    process.env.NODE_ENV = '';
-  });
+    it("should return an empty string if you don't put a namespace to it", () => {
+      process.env.NODE_ENV = 'production';
 
-  it("should return an error if you don't put a namespace to it", () => {
-    process.env.NODE_ENV = 'development';
-    const fn = () =>
-      render(
+      const { container } = render(
         <Component language="en">
           <TranslationExample literal="hi"></TranslationExample>
         </Component>
       );
-    expect(() => fn()).toThrow('hi you passed should have a namespace');
+      expect(container.querySelector('p')).toHaveTextContent('');
+      process.env.NODE_ENV = '';
+    });
 
-    process.env.NODE_ENV = 'production';
-  });
-
-  it("should return an error if we don't find the translation in development", () => {
-    process.env.NODE_ENV = 'development';
-    const fn = () =>
-      render(
+    it("should return an empty string if we don't find the translation in development", () => {
+      process.env.NODE_ENV = 'production';
+      const { container } = render(
         <Component language="en">
           <TranslationExample literal="common:hi"></TranslationExample>
         </Component>
       );
-    expect(fn).toThrowError(
-      "The value you provided common:hi doesn't exists please check the common file so you make sure it exists"
-    );
+      expect(container.querySelector('p')).toHaveTextContent('');
 
-    process.env.NODE_ENV = 'production';
+      process.env.NODE_ENV = '';
+    });
+
+    it("should return an error if you don't put a namespace to it", () => {
+      process.env.NODE_ENV = 'development';
+      const fn = () =>
+        render(
+          <Component language="en">
+            <TranslationExample literal="hi"></TranslationExample>
+          </Component>
+        );
+      expect(() => fn()).toThrow('hi you passed should have a namespace');
+
+      process.env.NODE_ENV = 'production';
+    });
+
+    it("should return an error if we don't find the translation in development", () => {
+      process.env.NODE_ENV = 'development';
+      const fn = () =>
+        render(
+          <Component language="en">
+            <TranslationExample literal="common:hi"></TranslationExample>
+          </Component>
+        );
+
+      expect(fn).toThrowError(
+        "The value you provided common:hi doesn't exists please check the common file so you make sure it exists"
+      );
+
+      process.env.NODE_ENV = 'production';
+    });
   });
 });
 
