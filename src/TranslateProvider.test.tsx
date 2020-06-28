@@ -70,6 +70,17 @@ const Component = ({
   return <TranslateProvider i18n={providerValue}>{children}</TranslateProvider>;
 };
 
+const TranslationExample = ({
+  literal,
+  options
+}: {
+  literal: string;
+  options?: any;
+}) => {
+  const { t } = useTranslate();
+  return <p>{t(literal, options)}</p>;
+};
+
 describe('TranslationProvider', () => {
   it('should render with the context passed', () => {
     const { container } = render(
@@ -143,24 +154,17 @@ describe('TranslationProvider', () => {
 });
 
 describe('useTranslate', () => {
-  const TranslationExample = ({
-    literal,
-    options
-  }: {
-    literal: string;
-    options?: any;
-  }) => {
-    const { t } = useTranslate();
-    return <p>{t(literal, options)}</p>;
-  };
-
   it("should return an empty string if we don't define a provider", () => {
+    global.console = { ...global.console, error: jest.fn() };
+
     const { container } = render(
       <TranslationExample literal="common:hello-world"></TranslationExample>
     );
     const p = container.querySelector('p');
 
     expect(p).toHaveTextContent('');
+    expect(global.console.error).toHaveBeenCalled();
+    expect(global.console.error).toHaveBeenCalledTimes(1);
   });
 
   it('should return the literal expected', () => {
@@ -285,13 +289,13 @@ describe('useTranslate', () => {
 
   it("should return an empty string if you don't put a namespace to it", () => {
     process.env.NODE_ENV = 'production';
+
     const { container } = render(
       <Component language="en">
         <TranslationExample literal="hi"></TranslationExample>
       </Component>
     );
     expect(container.querySelector('p')).toHaveTextContent('');
-
     process.env.NODE_ENV = '';
   });
 
@@ -316,7 +320,6 @@ describe('useTranslate', () => {
         </Component>
       );
     expect(() => fn()).toThrow('hi you passed should have a namespace');
-
     process.env.NODE_ENV = 'production';
   });
 
