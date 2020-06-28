@@ -54,10 +54,10 @@
     "babel-loader": "^8.0.6",
     "coveralls": "^3.0.9",
     "gh-pages": "^2.1.1",
-    "husky": "^3.1.0",
+    "husky": "^4.2.5",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^26.1.0",
-    "lint-staged": "^9.5.0",
+    "lint-staged": "^10.2.11",
     "node-sass": "^4.13.0",
     "postcss": "^7.0.24",
     "react": "^16.12.0",
@@ -84,12 +84,10 @@
   },
   "lint-staged": {
     "src/**/*.{js, jsx}": [
-      "npm run lint:js -- --fix --staged",
-      "git add"
+      "npm run lint:js -- --fix --staged"
     ],
     "src/**/*.{tsx, ts}": [
-      "npm run lint:ts -- --fix --staged",
-      "git add"
+      "npm run lint:ts -- --fix --staged"
     ]
   },
   "husky": {
