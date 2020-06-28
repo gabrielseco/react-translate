@@ -154,13 +154,6 @@ describe('TranslationProvider', () => {
 });
 
 describe('useTranslate', () => {
-  /* beforeEach(() => {
-    jest.spyOn(console, 'error').mockImplementation(() => {});
-  });
-  afterEach(() => {
-    (console.error as any).mockClear();
-  }); */
-
   it('should return the literal expected', () => {
     const { container } = render(
       <Component language="en">
