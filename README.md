@@ -1,4 +1,5 @@
-# React-Translate [![NPM Version](https://img.shields.io/npm/v/@rogal/react-translate.svg)](https://www.npmjs.com/package/@rogal/react-translate) [![NPM Downloads](https://img.shields.io/npm/dm/@rogal/react-translate.svg)](https://www.npmjs.com/package/react-translate) [![Travis](https://travis-ci.org/gabrielseco/react-translate.svg?branch=master)](https://travis-ci.org/gabrielseco/react-translate) [![Coverage Status](https://coveralls.io/repos/github/gabrielseco/react-translate/badge.svg?branch=master)](https://coveralls.io/github/gabrielseco/react-translate?branch=master)
+# React-Translate [![NPM Version](https://img.shields.io/npm/v/@rogal/react-translate.svg)](https://www.npmjs.com/package/@rogal/react-translate) [![NPM Downloads](https://img.shields.io/npm/dm/@rogal/react-translate.svg)](https://www.npmjs.com/package/react-translate) [![Actions Status](https://github.com/gabrielseco/react-translate/workflows/tests/badge.svg)](https://github.com/gabrielseco/react-translate/actions)
+[![Coverage Status](https://coveralls.io/repos/github/gabrielseco/react-translate/badge.svg?branch=master)](https://coveralls.io/github/gabrielseco/react-translate?branch=master)
 
 > Easier i18n to be happier
 
