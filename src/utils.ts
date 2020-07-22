@@ -17,6 +17,18 @@ const hasPlurals = (options: Options): boolean => {
   return arrValueOptions.length > 0;
 };
 
+const checkNamespaceInTranslations = ({
+  translations,
+  lang,
+  namespace
+}: {
+  namespace: string;
+  translations: Record<string, any>;
+  lang: string;
+}) => {
+  return Boolean(translations[lang][namespace]);
+};
+
 const searchValueInMemory = ({
   jsonKey,
   searchSeparator,
@@ -32,12 +44,20 @@ const searchValueInMemory = ({
 }): string | undefined => {
   let translationValue: string;
 
-  if (jsonKey.indexOf(searchSeparator) !== -1) {
-    translationValue = jsonKey
-      .split('.')
-      .reduce((o, i) => o[i], translations[lang][namespace]);
+  const foundSeparator = jsonKey.indexOf(searchSeparator) !== -1;
+
+  if (checkNamespaceInTranslations({ translations, lang, namespace })) {
+    if (foundSeparator) {
+      translationValue = jsonKey
+        .split('.')
+        .reduce((o, i) => o[i], translations[lang][namespace]);
+    } else {
+      translationValue = translations[lang][namespace][jsonKey];
+    }
   } else {
-    translationValue = translations[lang][namespace][jsonKey];
+    throw new Error(
+      `Namespace ${namespace} not found please add it to your i18n config`
+    );
   }
 
   return translationValue;

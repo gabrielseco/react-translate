@@ -346,6 +346,38 @@ describe('useTranslate', () => {
 
       process.env.NODE_ENV = 'production';
     });
+
+    it("should return an error if the namespace doesn't exist", () => {
+      process.env.NODE_ENV = 'development';
+      const fn = () =>
+        render(
+          <Component language="en">
+            <TranslationExample literal="auth:hi"></TranslationExample>
+          </Component>
+        );
+
+      expect(fn).toThrowError(
+        'Namespace auth not found please add it to your i18n config'
+      );
+
+      process.env.NODE_ENV = 'production';
+    });
+  });
+
+  it("should return an error if the namespace doesn't exist", () => {
+    process.env.NODE_ENV = 'development';
+    const fn = () =>
+      render(
+        <Component language="en">
+          <TranslationExample literal="auth:hi.depp"></TranslationExample>
+        </Component>
+      );
+
+    expect(fn).toThrowError(
+      'Namespace auth not found please add it to your i18n config'
+    );
+
+    process.env.NODE_ENV = 'production';
   });
 });
 
