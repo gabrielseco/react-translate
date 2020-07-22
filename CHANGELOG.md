@@ -13,7 +13,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Removed
 ### BREAKING CHANGES
 
-# [1.0.0-beta.16] - 2020-07-22
+## [1.0.0-beta.16] - 2020-07-22
 ### Fixed
   - Fixed an uncontrolled error when you don't have the locale json assigned in your config
 
