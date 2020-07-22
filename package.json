@@ -21,7 +21,9 @@
     "test": "jest --coverage",
     "report-coverage": "cat ./coverage/lcov.info | coveralls",
     "test:watch": "jest --watchAll --coverage",
-    "publish:storybook": "gh-pages -d .out-storybook"
+    "publish:storybook": "gh-pages -d .out-storybook",
+    "release:prepare": "shipjs prepare",
+    "release:trigger": "shipjs trigger"
   },
   "keywords": [],
   "author": "Gabriel García Seco",
@@ -68,6 +70,7 @@
     "rollup-plugin-typescript2": "^0.25.3",
     "sass-loader": "^8.0.0",
     "serve": "^11.2.0",
+    "shipjs": "^0.20.1",
     "ts-jest": "^26.1.1",
     "ts-loader": "^6.2.1",
     "typescript": "3.9.5"
