@@ -1,3 +1,7 @@
+# [1.0.0-beta.16](https://github.com/gabrielseco/react-translate/compare/1.0.0-beta.13...1.0.0-beta.16) (2020-07-22)
+
+
+
 # Change Log
 All notable changes to this project will be documented in this file.
 
