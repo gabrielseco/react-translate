@@ -1,7 +1,3 @@
-# [1.0.0-beta.16](https://github.com/gabrielseco/react-translate/compare/1.0.0-beta.13...1.0.0-beta.16) (2020-07-22)
-
-
-
 # Change Log
 All notable changes to this project will be documented in this file.
 
@@ -16,6 +12,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixed
 ### Removed
 ### BREAKING CHANGES
+
+# [1.0.0-beta.16] - 2020-07-22
+### Fixed
+  - Fixed an uncontrolled error when you don't have the locale json assigned in your config
 
 ## [1.0.0-beta.15] - 2020-06-10
 ### BREAKING CHANGES
