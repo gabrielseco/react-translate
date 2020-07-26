@@ -29,35 +29,61 @@ const checkNamespaceInTranslations = ({
   return Boolean(translations[lang][namespace]);
 };
 
+const findDeepTranslation = ({
+  jsonKey,
+  translations,
+  lang,
+  namespace
+}: {
+  jsonKey: string;
+  translations: Record<string, any>;
+  lang: string;
+  namespace: string;
+}) => {
+  const localeJsonFile = translations[lang][namespace];
+  return jsonKey.split('.').reduce((o, i) => {
+    return o[i] ? o[i] : '';
+  }, localeJsonFile);
+};
+
 const searchValueInMemory = ({
   jsonKey,
   searchSeparator,
   lang,
   namespace,
-  translations
+  translations,
+  isDev
 }: {
   jsonKey: string;
   searchSeparator: string;
   lang: string;
   namespace: string;
   translations: Record<string, any>;
+  isDev: boolean;
 }): string | undefined => {
-  let translationValue: string;
+  let translationValue: string | undefined;
 
   const foundSeparator = jsonKey.indexOf(searchSeparator) !== -1;
-
-  if (checkNamespaceInTranslations({ translations, lang, namespace })) {
-    if (foundSeparator) {
-      translationValue = jsonKey
-        .split('.')
-        .reduce((o, i) => o[i], translations[lang][namespace]);
-    } else {
-      translationValue = translations[lang][namespace][jsonKey];
+  if (foundSeparator) {
+    const translation = findDeepTranslation({
+      jsonKey,
+      translations,
+      lang,
+      namespace
+    });
+    if (translation) {
+      translationValue = translation;
     }
-  } else {
-    throw new Error(
-      `Namespace ${namespace} not found please add it to your i18n config`
-    );
+
+    if (!translation && isDev) {
+      throw new Error(
+        `The value you are searching for ${jsonKey} does not exist in your locale ${namespace}`
+      );
+    }
+  }
+
+  if (!foundSeparator) {
+    translationValue = translations[lang][namespace][jsonKey];
   }
 
   return translationValue;
@@ -122,16 +148,32 @@ export const translate = ({
 
   const [namespace, jsonKey] = key.split(namespaceSeparator);
 
+  const checkNamespaceExists = checkNamespaceInTranslations({
+    translations,
+    lang,
+    namespace
+  });
+
+  if (!checkNamespaceExists && isDev) {
+    throw new Error(
+      `Namespace ${namespace} not found please add it to your i18n config`
+    );
+  }
+
   let translationValue: string | undefined;
 
   if (optionsHasPlurals) {
+    // If it has plurals search for the plural
     const temporalPluralValue = searchValueInMemory({
       jsonKey: jsonKey + pluralsSuffix,
       namespace,
       translations,
       lang,
-      searchSeparator
+      searchSeparator,
+      isDev
     });
+
+    // if plural key is not found search for the singular
     translationValue =
       temporalPluralValue !== undefined
         ? temporalPluralValue
@@ -140,15 +182,19 @@ export const translate = ({
             namespace,
             translations,
             lang,
-            searchSeparator
+            searchSeparator,
+            isDev
           });
-  } else {
+  }
+
+  if (!optionsHasPlurals) {
     translationValue = searchValueInMemory({
       jsonKey,
       namespace,
       translations,
       lang,
-      searchSeparator
+      searchSeparator,
+      isDev
     });
   }
 
