@@ -331,6 +331,16 @@ describe('useTranslate', () => {
       process.env.NODE_ENV = 'production';
     });
 
+    it("should not return an error if you don't put a namespace to it in production", () => {
+      const fn = () =>
+        render(
+          <Component language="en">
+            <TranslationExample literal="hi"></TranslationExample>
+          </Component>
+        );
+      expect(() => fn()).not.toThrow('hi you passed should have a namespace');
+    });
+
     it("should return an error if we don't find the translation in development", () => {
       process.env.NODE_ENV = 'development';
       const fn = () =>
@@ -345,6 +355,19 @@ describe('useTranslate', () => {
       );
 
       process.env.NODE_ENV = 'production';
+    });
+
+    it("should not return an error if we don't find the translation in production", () => {
+      const fn = () =>
+        render(
+          <Component language="en">
+            <TranslationExample literal="common:hi"></TranslationExample>
+          </Component>
+        );
+
+      expect(fn).not.toThrowError(
+        "The value you provided common:hi doesn't exists please check the common file so you make sure it exists"
+      );
     });
 
     it("should return an error if the namespace doesn't exist", () => {
@@ -364,8 +387,7 @@ describe('useTranslate', () => {
     });
   });
 
-  it("should return an error if the namespace doesn't exist", () => {
-    process.env.NODE_ENV = 'development';
+  it("should not return an error if the namespace doesn't exist and it's production", () => {
     const fn = () =>
       render(
         <Component language="en">
@@ -373,11 +395,38 @@ describe('useTranslate', () => {
         </Component>
       );
 
-    expect(fn).toThrowError(
+    expect(fn).not.toThrowError(
       'Namespace auth not found please add it to your i18n config'
+    );
+  });
+
+  it("should return an error if the translation is deep and doesn't exist", () => {
+    process.env.NODE_ENV = 'development';
+    const fn = () =>
+      render(
+        <Component language="en">
+          <TranslationExample literal="common:hi.deep"></TranslationExample>
+        </Component>
+      );
+
+    expect(fn).toThrowError(
+      `The value you are searching for hi.deep does not exist in your locale common`
     );
 
     process.env.NODE_ENV = 'production';
+  });
+
+  it("should not return an error if the translation is deep and doesn't exist and we're in production", () => {
+    const fn = () =>
+      render(
+        <Component language="en">
+          <TranslationExample literal="common:hi.deep"></TranslationExample>
+        </Component>
+      );
+
+    expect(fn).not.toThrowError(
+      `The value you are searching for hi.deep does not exist in your locale common`
+    );
   });
 });
 
