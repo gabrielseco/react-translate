@@ -3,7 +3,6 @@ import { render, fireEvent } from '@testing-library/react';
 
 import {
   TranslateProvider,
-  TranslateContext,
   useTranslate,
   withTranslate,
   tFunction
@@ -82,32 +81,6 @@ const TranslationExample = ({
 };
 
 describe('TranslationProvider', () => {
-  it('should render with the context passed', () => {
-    const { container } = render(
-      <Component>
-        <TranslateContext.Consumer>
-          {context => {
-            return <pre>{context && context.lang}</pre>;
-          }}
-        </TranslateContext.Consumer>
-      </Component>
-    );
-    expect(container.querySelector('pre')).toHaveTextContent('en');
-  });
-
-  it('should render with the language setted in the provider', () => {
-    const { container } = render(
-      <Component language="es">
-        <TranslateContext.Consumer>
-          {context => {
-            return <pre>{context && context.lang}</pre>;
-          }}
-        </TranslateContext.Consumer>
-      </Component>
-    );
-    expect(container.querySelector('pre')).toHaveTextContent('es');
-  });
-
   it('should update the language prop if we pass a different language to the provider', () => {
     const ProviderUpdate = ({ children }: { children: any }) => {
       const [language, setLanguage] = React.useState('en');
@@ -134,9 +107,8 @@ describe('TranslationProvider', () => {
       );
     };
     const Child = () => {
-      const context = React.useContext(TranslateContext);
-      if (!context) return null;
-      return <p>{context.lang}</p>;
+      const { lang } = useTranslate();
+      return <p>{lang}</p>;
     };
 
     const { container, getByRole } = render(
@@ -154,6 +126,26 @@ describe('TranslationProvider', () => {
 });
 
 describe('useTranslate', () => {
+  it('should return an error if the provider is not setted', () => {
+    const originalConsoleError = console.error;
+    console.error = jest.fn();
+
+    const Child = () => {
+      const { t, switchLanguage } = useTranslate();
+      React.useEffect(() => {
+        switchLanguage('en');
+      }, [switchLanguage]);
+      return <p>{t('common:hello-world')}</p>;
+    };
+
+    render(<Child />);
+
+    expect(console.error).toHaveBeenCalledTimes(1);
+    expect(console.error).toHaveBeenCalledWith(
+      'Context is not defined, you should define it'
+    );
+    console.error = originalConsoleError;
+  });
   it('should return the literal expected', () => {
     const { container } = render(
       <Component language="en">
@@ -192,21 +184,17 @@ describe('useTranslate', () => {
   });
 
   it('should return the literal in english and after in spanish', () => {
+    const ChangeLanguage = () => {
+      const { switchLanguage } = useTranslate();
+      return <button onClick={() => switchLanguage('es')}>change lang</button>;
+    };
     const { container, getByRole } = render(
       <Component language="en">
         <TranslationExample
           literal="common:hello-world"
           options={{ value: 'Gabriel' }}
         ></TranslationExample>
-        <TranslateContext.Consumer>
-          {context => {
-            return (
-              <button onClick={() => context && context.switchLanguage('es')}>
-                change lang
-              </button>
-            );
-          }}
-        </TranslateContext.Consumer>
+        <ChangeLanguage />
       </Component>
     );
 
@@ -431,11 +419,55 @@ describe('useTranslate', () => {
 });
 
 describe('withTranslate', () => {
-  const TranslationExample = ({ t }: { t: tFunction }) => {
-    return <p>{t('common:hello-world')}</p>;
+  const TranslationExample = ({
+    t,
+    lang,
+    languages
+  }: {
+    t: tFunction;
+    lang: string;
+    languages: string[];
+  }) => {
+    return (
+      <>
+        <h1>{lang}</h1>
+        <p>{t('common:hello-world')}</p>
+        {languages.map(language => {
+          return <span key={language}>{language}</span>;
+        })}
+      </>
+    );
   };
 
   const EnhancedTranslation = withTranslate(TranslationExample);
+
+  it('should return the fallback setted in the provider', () => {
+    const { container } = render(
+      <Component>
+        <EnhancedTranslation />
+      </Component>
+    );
+
+    const p = container.querySelector('p');
+    const h1 = container.querySelector('h1');
+
+    expect(p).toHaveTextContent(commonEN['hello-world']);
+    expect(h1).toHaveTextContent('en');
+  });
+
+  it('should return the languages', () => {
+    const { container } = render(
+      <Component>
+        <EnhancedTranslation />
+      </Component>
+    );
+
+    const languages = container.querySelectorAll('span');
+
+    expect(languages.length).toBe(2);
+    expect(languages[0]).toHaveTextContent('en');
+    expect(languages[1]).toHaveTextContent('es');
+  });
 
   it('should return a literal correctly', () => {
     const { container } = render(
