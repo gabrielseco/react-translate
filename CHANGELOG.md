@@ -1,7 +1,3 @@
-# [1.0.0-beta.18](https://github.com/gabrielseco/react-translate/compare/v1.0.0-beta.17...v1.0.0-beta.18) (2020-08-01)
-
-
-
 # Change Log
 All notable changes to this project will be documented in this file.
 
@@ -16,6 +12,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixed
 ### Removed
 ### BREAKING CHANGES
+
+## [1.0.0-beta.18] - 2020-08-01
+### BREAKING CHANGES
+  You cannot access anymore to context directly
+
+### Added
+- Improved useTranslate so you can access to properties of the context
+### Removed
+ - Remove exported context
 
 ## [1.0.0-beta.17] - 2020-07-26
 ### Fixed
