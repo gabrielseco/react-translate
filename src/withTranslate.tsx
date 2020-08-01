@@ -1,8 +1,8 @@
 import React from 'react';
 
-import useTranslate from './useTranslate';
+import { useTranslate } from './useTranslate';
 
-const withTranslate = (Component: any): any => {
+export const withTranslate = (Component: any): any => {
   function WrapperComponent(): JSX.Element {
     const props = useTranslate();
     return <Component {...props} />;
@@ -10,5 +10,3 @@ const withTranslate = (Component: any): any => {
 
   return WrapperComponent;
 };
-
-export default withTranslate;

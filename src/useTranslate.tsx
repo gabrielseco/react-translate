@@ -11,7 +11,7 @@ interface UseTranslate {
   switchLanguage: (language: string) => void;
 }
 
-const useTranslate = (): UseTranslate => {
+export const useTranslate = (): UseTranslate => {
   const {
     isDev,
     searchSeparator,
@@ -28,7 +28,7 @@ const useTranslate = (): UseTranslate => {
       },
       lang: '',
       languages: [],
-      switchLanguage: language => {
+      switchLanguage: (language) => {
         return '';
       }
     };
@@ -58,5 +58,3 @@ const useTranslate = (): UseTranslate => {
     switchLanguage: context.switchLanguage
   };
 };
-
-export default useTranslate;
