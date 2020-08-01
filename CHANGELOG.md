@@ -13,6 +13,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Removed
 ### BREAKING CHANGES
 
+## [1.0.0-beta.18] - 2020-08-01
+### BREAKING CHANGES
+  You cannot access anymore to context directly
+
+### Added
+- Improved useTranslate so you can access to properties of the context
+### Removed
+ - Remove exported context
+
 ## [1.0.0-beta.17] - 2020-07-26
 ### Fixed
   - Fixed an uncontrolled error when a deep translation was not defined in a json file
