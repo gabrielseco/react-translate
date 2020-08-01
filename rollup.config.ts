@@ -1,9 +1,8 @@
 import typescript from 'rollup-plugin-typescript2';
-import postcss from 'rollup-plugin-postcss';
-import autoprefixer from 'autoprefixer';
 
 import pkg from './package.json';
 
+// eslint-disable-next-line
 export default {
   input: 'src/index.ts',
   output: [
@@ -23,13 +22,6 @@ export default {
   plugins: [
     typescript({
       typescript: require('typescript')
-    }),
-    postcss({
-      modules: {
-        generateScopedName: '[name]__[local]--[hash:base64:5]'
-      },
-      minimize: true,
-      plugins: [autoprefixer({})]
     })
   ]
 };

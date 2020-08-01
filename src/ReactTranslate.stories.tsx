@@ -2,13 +2,13 @@ import React from 'react';
 
 import {
   TranslateProvider,
-  TranslateContext,
   Trans,
   useTranslate,
   withTranslate,
   tFunction
 } from './index';
 
+// eslint-disable-next-line
 export default {
   title: 'ReactTranslate',
   component: TranslateProvider
@@ -17,16 +17,10 @@ export default {
 const Children = () => {
   const { t } = useTranslate();
   const [count, setCount] = React.useState(0);
-  const context = React.useContext(TranslateContext);
-
-  if (!context) {
-    return null;
-  }
-
-  const { lang, switchLanguage } = context;
+  const { lang, switchLanguage } = useTranslate();
 
   return (
-    <>
+    <React.Fragment>
       <pre>{lang}</pre>
       <pre>{t('dashboard:broncano.say.hi')}</pre>
       <pre>{t('common:hello-world')}</pre>
@@ -65,7 +59,7 @@ const Children = () => {
           I have <strong>1</strong> coupons and 1 uses
         </Trans>
       </pre>
-      <button onClick={() => setCount(count => count + 1)}>
+      <button onClick={() => setCount((count) => count + 1)}>
         increment count
       </button>
       <button onClick={() => switchLanguage('es')}>
@@ -74,7 +68,7 @@ const Children = () => {
       <button onClick={() => switchLanguage('en')}>
         cambiar lenguage a en
       </button>
-    </>
+    </React.Fragment>
   );
 };
 

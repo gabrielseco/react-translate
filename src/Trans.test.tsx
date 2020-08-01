@@ -1,7 +1,7 @@
 import React from 'react';
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 
-import Trans from './Trans';
+import { Trans } from './Trans';
 
 describe('Trans component', () => {
   it('should render Trans without errors', () => {
@@ -23,29 +23,25 @@ describe('Trans component', () => {
   it('should render the fallback if the translation is empty', () => {
     const t = (str: string) => '';
 
-    const { queryByText } = render(
-      <Trans translation={t('adios_nico')}>hola nico</Trans>
-    );
-    expect(queryByText(/adios_nico/)).toBeNull();
-    expect(queryByText(/hola nico/)).not.toBeNull();
+    render(<Trans translation={t('adios_nico')}>hola nico</Trans>);
+    expect(screen.queryByText(/adios_nico/)).toBeNull();
+    expect(screen.queryByText(/hola nico/)).not.toBeNull();
   });
 
   it('should render a string with html correctly', () => {
     const t = (str: string) => '<strong>0</strong>';
 
-    const { container, queryByText } = render(
+    const { container } = render(
       <Trans translation={t('adios_nico')}>hola nico</Trans>
     );
-    expect(queryByText(/hola nico/)).toBeNull();
+    expect(screen.queryByText(/hola nico/)).toBeNull();
     expect(container.querySelector('strong')).not.toBeNull();
   });
 
   it('should render translation prop as an array', () => {
     const t = (str: string) => str;
 
-    const { queryByText } = render(
-      <Trans translation={[t('hola'), t('nico')]}>hola nico</Trans>
-    );
-    expect(queryByText(/hola nico/)).not.toBeNull();
+    render(<Trans translation={[t('hola'), t('nico')]}>hola nico</Trans>);
+    expect(screen.queryByText(/hola nico/)).not.toBeNull();
   });
 });

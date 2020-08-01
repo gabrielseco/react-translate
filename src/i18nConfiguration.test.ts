@@ -1,4 +1,4 @@
-import i18nConfiguration from './i18nConfiguration';
+import { i18nConfiguration } from './i18nConfiguration';
 
 const commonEN = {
   'hello-world': 'hello world',

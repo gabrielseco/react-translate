@@ -1,9 +1,8 @@
 import React from 'react';
-import { render, fireEvent } from '@testing-library/react';
+import { render, fireEvent, screen } from '@testing-library/react';
 
 import {
   TranslateProvider,
-  TranslateContext,
   useTranslate,
   withTranslate,
   tFunction
@@ -82,32 +81,6 @@ const TranslationExample = ({
 };
 
 describe('TranslationProvider', () => {
-  it('should render with the context passed', () => {
-    const { container } = render(
-      <Component>
-        <TranslateContext.Consumer>
-          {context => {
-            return <pre>{context && context.lang}</pre>;
-          }}
-        </TranslateContext.Consumer>
-      </Component>
-    );
-    expect(container.querySelector('pre')).toHaveTextContent('en');
-  });
-
-  it('should render with the language setted in the provider', () => {
-    const { container } = render(
-      <Component language="es">
-        <TranslateContext.Consumer>
-          {context => {
-            return <pre>{context && context.lang}</pre>;
-          }}
-        </TranslateContext.Consumer>
-      </Component>
-    );
-    expect(container.querySelector('pre')).toHaveTextContent('es');
-  });
-
   it('should update the language prop if we pass a different language to the provider', () => {
     const ProviderUpdate = ({ children }: { children: any }) => {
       const [language, setLanguage] = React.useState('en');
@@ -127,47 +100,66 @@ describe('TranslationProvider', () => {
         }
       };
       return (
-        <>
+        <React.Fragment>
           <TranslateProvider i18n={providerValue}>{children}</TranslateProvider>
           <button onClick={() => setLanguage('es')}></button>
-        </>
+        </React.Fragment>
       );
     };
     const Child = () => {
-      const context = React.useContext(TranslateContext);
-      if (!context) return null;
-      return <p>{context.lang}</p>;
+      const { lang } = useTranslate();
+      return <p>{lang}</p>;
     };
 
-    const { container, getByRole } = render(
+    render(
       <ProviderUpdate>
         <Child></Child>
       </ProviderUpdate>
     );
 
-    expect(container.querySelector('p')).toHaveTextContent('en');
-    const button = getByRole('button');
+    expect(screen.getByText('en')).toBeInTheDocument();
+
+    const button = screen.getByRole('button');
 
     fireEvent.click(button);
-    expect(container.querySelector('p')).toHaveTextContent('es');
+    expect(screen.getByText('es')).toBeInTheDocument();
   });
 });
 
 describe('useTranslate', () => {
+  it('should return an error if the provider is not setted', () => {
+    const originalConsoleError = console.error;
+    console.error = jest.fn();
+
+    const Child = () => {
+      const { t, switchLanguage } = useTranslate();
+      React.useEffect(() => {
+        switchLanguage('en');
+      }, [switchLanguage]);
+      return <p>{t('common:hello-world')}</p>;
+    };
+
+    render(<Child />);
+
+    expect(console.error).toHaveBeenCalledTimes(1);
+    expect(console.error).toHaveBeenCalledWith(
+      'Context is not defined, you should define it'
+    );
+    console.error = originalConsoleError;
+  });
+
   it('should return the literal expected', () => {
-    const { container } = render(
+    render(
       <Component language="en">
         <TranslationExample literal="common:hello-world"></TranslationExample>
       </Component>
     );
 
-    const p = container.querySelector('p');
-
-    expect(p).toHaveTextContent(commonEN['hello-world']);
+    expect(screen.getByText(commonEN['hello-world'])).toBeInTheDocument();
   });
 
   it('should return the a literal with interpolations', () => {
-    const { getByText } = render(
+    render(
       <Component language="en">
         <TranslationExample
           literal="common:hello-world-with-interpolations"
@@ -176,64 +168,58 @@ describe('useTranslate', () => {
       </Component>
     );
 
-    expect(getByText(/Gabriel/)).toBeDefined();
+    expect(screen.getByText(/Gabriel/)).toBeInTheDocument();
   });
 
   it('should return the a literal with dot notation', () => {
-    const { container } = render(
+    render(
       <Component language="en">
         <TranslationExample literal="dashboard:broncano.say.hi"></TranslationExample>
       </Component>
     );
 
-    expect(container.querySelector('p')).toHaveTextContent(
-      dashboardEN.broncano.say.hi
-    );
+    expect(screen.getByText(dashboardEN.broncano.say.hi)).toBeInTheDocument();
   });
 
   it('should return the literal in english and after in spanish', () => {
-    const { container, getByRole } = render(
+    const ChangeLanguage = () => {
+      const { switchLanguage } = useTranslate();
+      return <button onClick={() => switchLanguage('es')}>change lang</button>;
+    };
+
+    render(
       <Component language="en">
         <TranslationExample
           literal="common:hello-world"
           options={{ value: 'Gabriel' }}
         ></TranslationExample>
-        <TranslateContext.Consumer>
-          {context => {
-            return (
-              <button onClick={() => context && context.switchLanguage('es')}>
-                change lang
-              </button>
-            );
-          }}
-        </TranslateContext.Consumer>
+        <ChangeLanguage />
       </Component>
     );
 
-    const p = container.querySelector('p');
-    const button = getByRole('button');
+    const button = screen.getByRole('button');
 
-    expect(p).toHaveTextContent(commonEN['hello-world']);
+    expect(screen.getByText(commonEN['hello-world'])).toBeInTheDocument();
 
     fireEvent.click(button);
 
-    expect(p).toHaveTextContent(commonES['hello-world']);
+    expect(screen.getByText(commonES['hello-world'])).toBeInTheDocument();
   });
 
   it('should return the translate value without interpolations', () => {
-    const { container } = render(
+    render(
       <Component language="en">
         <TranslationExample literal="common:hello-world-with-interpolations"></TranslationExample>
       </Component>
     );
 
-    const p = container.querySelector('p');
-
-    expect(p?.textContent).toBe('hello world my name is value');
+    expect(
+      screen.getByText('hello world my name is value')
+    ).toBeInTheDocument();
   });
 
   it('should return the plural translation with zero quantity', () => {
-    const { container } = render(
+    render(
       <Component language="en">
         <TranslationExample
           literal="common:pokemon"
@@ -241,13 +227,13 @@ describe('useTranslate', () => {
         ></TranslationExample>
       </Component>
     );
-    expect(container.querySelector('p')).toHaveTextContent(
-      'I have <strong>0</strong> pokemones'
-    );
+    expect(
+      screen.getByText('I have <strong>0</strong> pokemones')
+    ).toBeInTheDocument();
   });
 
   it('should return the plural translation if it finds one', () => {
-    const { container } = render(
+    render(
       <Component language="en">
         <TranslationExample
           literal="common:pokemon"
@@ -255,13 +241,14 @@ describe('useTranslate', () => {
         ></TranslationExample>
       </Component>
     );
-    expect(container.querySelector('p')).toHaveTextContent(
-      'I have <strong>2</strong> pokemones'
-    );
+
+    expect(
+      screen.getByText('I have <strong>2</strong> pokemones')
+    ).toBeInTheDocument();
   });
 
   it('should return the singular translation if it does not find the plural translation', () => {
-    const { container } = render(
+    render(
       <Component language="en">
         <TranslationExample
           literal="common:plural-singular"
@@ -269,13 +256,13 @@ describe('useTranslate', () => {
         ></TranslationExample>
       </Component>
     );
-    expect(container.querySelector('p')).toHaveTextContent(
-      'Only this singular translation'
-    );
+    expect(
+      screen.getByText('Only this singular translation')
+    ).toBeInTheDocument();
   });
   describe('errors', () => {
     beforeEach(() => {
-      //eslint-disable-next-line
+      // eslint-disable-next-line
       jest.spyOn(console, 'error').mockImplementation(() => {});
     });
 
@@ -284,12 +271,11 @@ describe('useTranslate', () => {
     });
 
     it("should return an empty string if we don't define a provider", () => {
-      const { container } = render(
+      render(
         <TranslationExample literal="common:hello-world"></TranslationExample>
       );
-      const p = container.querySelector('p');
 
-      expect(p).toHaveTextContent('');
+      expect(screen.queryByText(commonEN['hello-world'])).toBe(null);
       expect(console.error).toHaveBeenCalled();
       expect(console.error).toHaveBeenCalledTimes(1);
     });
@@ -431,21 +417,59 @@ describe('useTranslate', () => {
 });
 
 describe('withTranslate', () => {
-  const TranslationExample = ({ t }: { t: tFunction }) => {
-    return <p>{t('common:hello-world')}</p>;
+  const TranslationExample = ({
+    t,
+    lang,
+    languages
+  }: {
+    t: tFunction;
+    lang: string;
+    languages: string[];
+  }) => {
+    return (
+      <React.Fragment>
+        <h1>lang: {lang}</h1>
+        <p>{t('common:hello-world')}</p>
+        {languages.map((language) => {
+          return <span key={language}>{language}</span>;
+        })}
+      </React.Fragment>
+    );
   };
 
   const EnhancedTranslation = withTranslate(TranslationExample);
 
-  it('should return a literal correctly', () => {
+  it('should return the fallback setted in the provider', () => {
+    render(
+      <Component>
+        <EnhancedTranslation />
+      </Component>
+    );
+
+    expect(screen.getByText(/lang: en/)).toBeInTheDocument();
+  });
+
+  it('should return the languages', () => {
     const { container } = render(
+      <Component>
+        <EnhancedTranslation />
+      </Component>
+    );
+
+    const languages = container.querySelectorAll('span');
+
+    expect(languages.length).toBe(2);
+    expect(screen.getByText('en')).toBeInTheDocument();
+    expect(screen.getByText('es')).toBeInTheDocument();
+  });
+
+  it('should return a literal correctly', () => {
+    render(
       <Component language="en">
         <EnhancedTranslation />
       </Component>
     );
 
-    const p = container.querySelector('p');
-
-    expect(p).toHaveTextContent(commonEN['hello-world']);
+    expect(screen.getByText(commonEN['hello-world'])).toBeInTheDocument();
   });
 });

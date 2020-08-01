@@ -4,14 +4,15 @@ export const isDev = (): boolean => process.env.NODE_ENV === 'development';
 
 const hasPlurals = (options: Options): boolean => {
   const arrValueOptions = Object.keys(options)
-    .map(key => {
+    .map((key) => {
       return {
         type: typeof options[key],
         value: options[key]
       };
     })
     .filter(
-      value => value.type === 'number' && (value.value > 1 || value.value === 0)
+      (value) =>
+        value.type === 'number' && (value.value > 1 || value.value === 0)
     );
 
   return arrValueOptions.length > 0;

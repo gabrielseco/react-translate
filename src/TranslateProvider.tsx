@@ -8,7 +8,7 @@ interface TranslateProviderProps {
   children: React.ReactNode;
 }
 
-const TranslateProvider = ({
+export const TranslateProvider = ({
   i18n,
   children
 }: TranslateProviderProps): JSX.Element => {
@@ -37,5 +37,3 @@ const TranslateProvider = ({
     </TranslateContext.Provider>
   );
 };
-
-export default TranslateProvider;

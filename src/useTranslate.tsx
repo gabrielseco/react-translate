@@ -4,7 +4,14 @@ import { translate, getTraslationConstants } from './utils';
 import { TranslateContext } from './TranslateContext';
 import { Options, tFunction } from './interfaces';
 
-const useTranslate = (): { t: tFunction } => {
+interface UseTranslate {
+  t: tFunction;
+  lang: string;
+  languages: string[];
+  switchLanguage: (language: string) => void;
+}
+
+export const useTranslate = (): UseTranslate => {
   const {
     isDev,
     searchSeparator,
@@ -17,6 +24,11 @@ const useTranslate = (): { t: tFunction } => {
     console.error('Context is not defined, you should define it');
     return {
       t: (key: string, options?: Options): string => {
+        return '';
+      },
+      lang: '',
+      languages: [],
+      switchLanguage: (language) => {
         return '';
       }
     };
@@ -40,8 +52,9 @@ const useTranslate = (): { t: tFunction } => {
   };
 
   return {
-    t
+    t,
+    lang: context.lang,
+    languages: context.languages,
+    switchLanguage: context.switchLanguage
   };
 };
-
-export default useTranslate;
