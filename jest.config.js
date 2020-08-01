@@ -7,7 +7,9 @@ module.exports = {
   transformIgnorePatterns: ['<rootDir>/node_modules/'],
   collectCoverageFrom: [
     'src/**/*.{ts,tsx}',
+    '!src/index.ts',
     '!src/**/*.stories.{ts,tsx}',
+    '!**/node_modules/**',
     '!**/node_modules/**',
     '!**/*.d.ts'
   ],

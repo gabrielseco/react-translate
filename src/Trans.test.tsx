@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 
-import Trans from './Trans';
+import { Trans } from './Trans';
 
 describe('Trans component', () => {
   it('should render Trans without errors', () => {
