@@ -5,5 +5,5 @@ export interface I18nConfiguration {
   fallbackLng: string;
   languages: string[];
   translations: Translations;
-  language?: string;
+  language: string;
 }
