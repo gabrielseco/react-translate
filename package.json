@@ -76,10 +76,10 @@
     ]
   },
   "lint-staged": {
-    "*.{js, jsx}": [
+    "*.{js,jsx}": [
       "npm run lint:js -- --fix --staged"
     ],
-    "*.{tsx, ts}": [
+    "*.{tsx,ts}": [
       "npm run lint:ts -- --fix --staged"
     ]
   },
