@@ -16,6 +16,7 @@ jobs:
         with:
           registry-url: "https://registry.npmjs.org"
       - run: npm install
+      - run: npm run lint
       - run: npm test
       - run: npm run release:trigger
         env:
