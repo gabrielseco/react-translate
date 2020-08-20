@@ -13,6 +13,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Removed
 ### BREAKING CHANGES
 
+## [1.0.0] - 2020-08-20
+- Release it 🚀🚀🚀
+
 ## [1.0.0-beta.18] - 2020-08-01
 ### BREAKING CHANGES
   You cannot access anymore to context directly
