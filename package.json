@@ -62,7 +62,7 @@
     "rollup-plugin-typescript2": "0.25.3",
     "serve": "11.2.0",
     "shipjs": "0.20.1",
-    "ts-jest": "26.1.4",
+    "ts-jest": "26.2.0",
     "typescript": "3.9.7"
   },
   "eslintConfig": {
