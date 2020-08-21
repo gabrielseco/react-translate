@@ -1,3 +1,15 @@
+## [1.0.1](https://github.com/gabrielseco/react-translate/compare/v1.0.0...v1.0.1) (2020-08-21)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @rogal/react-translate to v1.0.0 ([#50](https://github.com/gabrielseco/react-translate/issues/50)) ([aa700a5](https://github.com/gabrielseco/react-translate/commit/aa700a5a3c1dd3abc8013971ad1eb06bbcfd2e23))
+* **deps:** update dependency html-react-parser to ^0.13.0 ([#51](https://github.com/gabrielseco/react-translate/issues/51)) ([8c02402](https://github.com/gabrielseco/react-translate/commit/8c0240291bd609245227c7920859d15de6a72d35))
+* **deps:** update dependency next to v9.3.2 [security] ([#30](https://github.com/gabrielseco/react-translate/issues/30)) ([4c06dc2](https://github.com/gabrielseco/react-translate/commit/4c06dc248d61811db624f19acede794124a30fd7))
+* **deps:** update dependency next to v9.5.2 ([#52](https://github.com/gabrielseco/react-translate/issues/52)) ([f2adc5b](https://github.com/gabrielseco/react-translate/commit/f2adc5b757abc73d5824ee5bc81da4d7bc9e7db2))
+
+
+
 # Change Log
 All notable changes to this project will be documented in this file.
 
