@@ -13,6 +13,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Removed
 ### BREAKING CHANGES
 
+
+## [1.0.1] - 2020-08-21
+
+### Fixed
+- withTranslate bug props not passed to decorated component
+
+
 ## [1.0.0] - 2020-08-20
 - Release it 🚀🚀🚀
 
