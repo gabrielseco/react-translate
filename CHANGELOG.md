@@ -1,3 +1,20 @@
+## [1.0.2](https://github.com/gabrielseco/react-translate/compare/v1.0.1...v1.0.2) (2020-12-17)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @rogal/react-translate to v1.0.1 ([b488e2f](https://github.com/gabrielseco/react-translate/commit/b488e2fba0da9005866bfeac4cf5f791b01048bc))
+* **deps:** update dependency html-react-parser to ^0.14.0 ([94f0eb6](https://github.com/gabrielseco/react-translate/commit/94f0eb65ab200814502cce2dbc9cf902242d632b))
+* **deps:** update dependency next to v10 ([#160](https://github.com/gabrielseco/react-translate/issues/160)) ([4d2a3d4](https://github.com/gabrielseco/react-translate/commit/4d2a3d40f81d5d081318ad6743997f27e5de0fbf))
+* **deps:** update dependency next to v10.0.1 ([13184cd](https://github.com/gabrielseco/react-translate/commit/13184cd4b56ce6b570a0b31f8ee55ea11d2e28a8))
+* **deps:** update dependency next to v10.0.2 ([bb3a0ac](https://github.com/gabrielseco/react-translate/commit/bb3a0ac93f9a203215de7485dabdc6678145685a))
+* **deps:** update dependency next to v10.0.3 ([8330ca6](https://github.com/gabrielseco/react-translate/commit/8330ca658c3b43c52ea646b88e2a73447d613460))
+* **deps:** update dependency next to v9.5.3 ([4f76dce](https://github.com/gabrielseco/react-translate/commit/4f76dcefb06350dcab92d7164aba7757e3d910bc))
+* **deps:** update dependency next to v9.5.4 ([bf35c3d](https://github.com/gabrielseco/react-translate/commit/bf35c3dbdf1096041cdba013f9e983093683a8e1))
+* **deps:** update dependency next to v9.5.5 ([a7b1015](https://github.com/gabrielseco/react-translate/commit/a7b10154fa42b97587c2fa9d8e824f1c203c1ab8))
+
+
+
 # Change Log
 All notable changes to this project will be documented in this file.
 
