@@ -13,6 +13,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Removed
 ### BREAKING CHANGES
 
+## [1.0.2] - 2020-12-17
+- Update deps
 
 ## [1.0.1] - 2020-08-21
 
