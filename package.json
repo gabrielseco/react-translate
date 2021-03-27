@@ -35,7 +35,7 @@
     "html-react-parser": "1.2.4"
   },
   "devDependencies": {
-    "@rogal/front-linter": "3.0.0-beta.9",
+    "@rogal/front-linter": "3.0.0-beta.10",
     "@storybook/addon-essentials": "6.1.21",
     "@storybook/react": "6.1.21",
     "@testing-library/jest-dom": "5.11.10",
