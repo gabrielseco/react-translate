@@ -36,8 +36,8 @@
   },
   "devDependencies": {
     "@rogal/front-linter": "3.0.0-beta.10",
-    "@storybook/addon-essentials": "6.4.10",
-    "@storybook/react": "6.4.10",
+    "@storybook/addon-essentials": "6.4.12",
+    "@storybook/react": "6.4.12",
     "@testing-library/jest-dom": "5.16.1",
     "@testing-library/react": "11.2.7",
     "@types/jest": "26.0.24",
